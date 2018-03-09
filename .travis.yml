@@ -3,6 +3,5 @@ python:
   - "3.6"
 install:
   - pip install awscli
-  - mkdir -p ~/$TRAVIS_BUILD_NUMBER
 script: 
-  - aws s3 sync ./source s3://AWS_PATH/TESTS/$TRAVIS_BUILD_NUMBER
+  - aws s3 sync ./source s3://$AWS_PATH/TESTS/$TRAVIS_BUILD_NUMBER

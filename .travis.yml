@@ -1,9 +1,8 @@
-deploy:
-  provider: s3
-  access_key_id: $AWS_KEY
-  secret_access_key: $AWS_SECRET
-  bucket: $AWS_BUCKET
-  upload-dir: "/test"
-  skip_cleanup: true
-  local_dir: source
-  detect_encoding: true
+language: python
+python:
+  - "3.6"
+install:
+  - pip install awscli --user
+  - mkdir -p ~/$TRAVIS_BUILD_NUMBER
+script: 
+  - aws s3 sync ./source s3://AWS_PATH/TESTS/$TRAVIS_BUILD_NUMBER

@@ -1,0 +1,19 @@
+{
+  "name": "aws-cognito-wrapper-js-library",
+  "version": "1.0.0",
+  "description": "A simple javascript library for managing AWS Cognito signup/signin process.",
+  "author": "Nacho Coll <ignacio.coll@gmail.com>",
+  "private": true,
+  "scripts": {
+    "build": "./build/gulp compress"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-jslint": "^1.0.10",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^3.0.0",
+    "gulp-util": "^3.0.8",
+    "path": "^0.12.7",
+    "pump": "^3.0.0"
+  }
+}

@@ -1,4 +1,4 @@
-/*jslint browser: true, devel: true, white: true, plusplus: true */
+/*jslint browser: true, devel: true, white: true */
 /*global
 $,CodeMirror,Handlebars,
 Utils,
@@ -67,6 +67,7 @@ var Mustache = (function () {
 }());
 
 var InsertMustacheForm = (function(){
+  'use strict';
   var
     codeMirror = null,
     initEvents = function(){
@@ -103,8 +104,9 @@ var InsertMustacheForm = (function(){
 
   return {
     init: function(editor){
-        if (editor!==null)
+        if (editor!==null){
           codeMirror = editor;
+        }
         initEvents();
     },
     setCodeMirror:function(editor){
@@ -115,7 +117,7 @@ var InsertMustacheForm = (function(){
 
 /* options.preview.frameId, options.preview.secondFrameId, options.preview.secondFrameVisibilityId */
 var Mustaches = (function () {
-    'use strict';
+   'use strict';
     var options = null,
         selectLinks = null,
         currentMustache = null,

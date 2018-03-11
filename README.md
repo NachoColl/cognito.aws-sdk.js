@@ -8,6 +8,6 @@ To start using AWS Cognito SDK wrapper, include the library script files:
 
 ```js
 <script src="https://d2m9ia44cpx81c.cloudfront.net/js/services/1/services.library.min.js" />
-<script src="https://d2m9ia44cpx81c.cloudfront.net/js/services/1/services.aws-sdk.min.js "></script>
+<script src="https://d2m9ia44cpx81c.cloudfront.net/js/services/1/services.aws-sdk.min.js" />
 ```
 

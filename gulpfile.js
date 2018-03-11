@@ -25,7 +25,7 @@ gulp.task('update-readme', function (cb) {
   gutil.log('The build number:' + process.env.TRAVIS_BUILD_NUMBER);
   pump([
         gulp.src(path.resolve(__dirname, './') + '/README.md'),
-        replace(new RegExp('https:\/\/d2m9ia44cpx81c\.cloudfront\.net\/js\/services\/(?:\d*)\/services\.library\.min\.js', 'g'), 'https://d2m9ia44cpx81c.cloudfront.net/js/services/' + process.env.TRAVIS_BUILD_NUMBER + '/services.library.min.js'),
+        replace(new RegExp('https:\/\/d2m9ia44cpx81c\.cloudfront\.net\/js\/services\/(?:\\d*)\/services\.library\.min\.js', 'g'), 'https://d2m9ia44cpx81c.cloudfront.net/js/services/' + process.env.TRAVIS_BUILD_NUMBER + '/services.library.min.js'),
         gulp.dest(path.resolve(__dirname, './'))
     ],
     cb

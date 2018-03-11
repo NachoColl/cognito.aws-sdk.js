@@ -1,14 +1,8 @@
-# AWS Cognito Wrapper
+# AWS Cognito Wrapper [![Build Status](https://travis-ci.org/NachoColl/services.aws-sdk.js.svg?branch=master)](https://travis-ci.org/NachoColl/services.aws-sdk.js)
 
-A simple javascript library for managing AWS Cognito signup/signin process.
+A simple javascript library for managing AWS Cognito signup/signin process. 
 
 ## Installing
 
 To install just include the library.
 
-
-
-## Building
-
-- ```npm install --global gulp``
-- ```npm install```

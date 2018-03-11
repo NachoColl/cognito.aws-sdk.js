@@ -12,7 +12,7 @@
     "gulp-jslint": "^1.0.10",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^3.0.0",
-    "gulp-util": "latest",
+    "gulp-util": "^3.0.8",
     "path": "^0.12.7",
     "pump": "^3.0.0"
   }

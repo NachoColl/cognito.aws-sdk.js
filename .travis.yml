@@ -12,5 +12,8 @@ deploy:
   provider: script
   script:
     - aws s3 sync ./dist s3://$AWS_S3_PATH/$TRAVIS_BUILD_NUMBER
+after_deploy:
+  - gulp update-readme
+  - cat README.md
 
 

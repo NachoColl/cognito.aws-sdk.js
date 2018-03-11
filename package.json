@@ -11,6 +11,7 @@
     "gulp": "^3.9.1",
     "gulp-jslint": "^1.0.10",
     "gulp-rename": "^1.2.2",
+    "gulp-string-replace": "^1.0.0",
     "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.8",
     "path": "^0.12.7",

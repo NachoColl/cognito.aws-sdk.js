@@ -3,6 +3,7 @@ var   path    = require('path'),
       gutil   = require('gulp-util'),
       uglify  = require('gulp-uglify'),
       rename  = require("gulp-rename"),
+      replace = require('gulp-string-replace'),
       jslint  = require('gulp-jslint'),
       pump    = require('pump');
 
@@ -19,3 +20,14 @@ gulp.task('compress', function (cb) {
     cb
   );
 });
+
+gulp.task('update-readme', function (cb) {
+  pump([
+        gulp.src(path.resolve(__dirname, './') + '/README.md'),
+        replace(new RegExp('<script.*?src="(.*?)"', 'g'), 'production'),
+        gulp.dest(path.resolve(__dirname, './') + '/README.md')
+    ],
+    cb
+  );
+});
+

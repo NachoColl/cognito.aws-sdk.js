@@ -11,6 +11,6 @@ deploy:
   skip_cleanup: true
   provider: script
   script:
-    - aws s3 sync ./dist s3://$AWS_PATHTESTS/$TRAVIS_BUILD_NUMBER
+    - aws s3 sync ./dist s3://$AWS_S3_PATH/$TRAVIS_BUILD_NUMBER
 
 

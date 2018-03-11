@@ -8,10 +8,10 @@ script:
 before_deploy:
   - pip install awscli --upgrade --user
 deploy:
-  skip_cleanup: true
-  provider: script
-  script:
-    - aws s3 sync ./dist s3://$AWS_S3_PATH/$TRAVIS_BUILD_NUMBER
+  - provider: script
+    skip_cleanup: true
+    script:
+      - aws s3 sync ./dist s3://$AWS_S3_PATH/$TRAVIS_BUILD_NUMBER
 after_deploy:
   - gulp update-readme
   - cat README.md

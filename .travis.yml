@@ -8,6 +8,8 @@ script:
 before_deploy:
   - pip install awscli 
 deploy:
-  - aws s3 sync ./dist s3://$AWS_PATHTESTS/$TRAVIS_BUILD_NUMBER
+  provider: scrit
+  script:
+    - aws s3 sync ./dist s3://$AWS_PATHTESTS/$TRAVIS_BUILD_NUMBER
 
 

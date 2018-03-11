@@ -25,7 +25,7 @@ gulp.task('update-readme', function (cb) {
   pump([
         gulp.src(path.resolve(__dirname, './') + '/README.md'),
         replace(new RegExp('<script.*?src="(.*?)"', 'g'), 'production'),
-        gulp.dest(path.resolve(__dirname, './') + '/README.md')
+        gulp.dest(path.resolve(__dirname, './'))
     ],
     cb
   );

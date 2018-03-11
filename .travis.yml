@@ -6,9 +6,9 @@ install:
 script: 
   - gulp compress
 before_deploy:
-  - pip install awscli 
+  - pip install awscli --upgrade --user
 deploy:
-  provider: scrit
+  provider: script
   script:
     - aws s3 sync ./dist s3://$AWS_PATHTESTS/$TRAVIS_BUILD_NUMBER
 

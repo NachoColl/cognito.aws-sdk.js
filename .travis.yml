@@ -14,7 +14,7 @@ before_install:
   # Update package.json based on the git tag we just created
   - npm --no-git-tag-version version from-git
   - VERSION=$(git describe --abbrev=0 --tags)
-  - cat $VERSION
+  - $VERSION
 install:
   - npm install
 script: 

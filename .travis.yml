@@ -13,7 +13,7 @@ before_install:
   - "{ sed -nE 's/^[ \\t]*\"version\": \"([0-9]{1,}\\.[0-9]{1,}\\.)[0-9x]{1,}\",$/\\1/p' package.json; git describe --abbrev=0 --tags | sed -E 's/^v([0-9]{1,}\\.[0-9]{1,}\\.)([0-9]{1,})$/\\1 \\2/g'; } | tr \"\\n\" \" \" | awk '{printf($1==$2?\"v\"$2$3+1:\"v\"$1\"0\")}' | xargs -I {} git tag -a {} -m \"{}\"\n"
   # Update package.json based on the git tag we just created
   - npm --no-git-tag-version version from-git
-  - VERSION=$(git describe --abbrev=0 --tags)
+  - NEW_VERSION=$(git describe --abbrev=0 --tags)
 install:
   - npm install
 script: 
@@ -26,11 +26,10 @@ deploy:
   - provider: script
     skip_cleanup: true
     script:
-      - aws s3 sync ./dist s3://$AWS_S3_PATH/$VERSION
+      - aws s3 sync ./dist s3://$AWS_S3_PATH/$NEW_VERSION
   - provider: releases
     api_key: ${GH_TOKEN}
     file: README.md
     skip_cleanup: true
     on:
-      tags: true
       branch: master

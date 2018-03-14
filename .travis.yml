@@ -20,20 +20,17 @@ script:
   - gulp compress
 before_deploy:
   - pip install awscli --upgrade --user
+  - gulp update-readme
+  - cat README.md
 deploy:
   - provider: script
     skip_cleanup: true
     script:
       - aws s3 sync ./dist s3://$AWS_S3_PATH/$VERSION
-  - provider: script
+  - provider: releases
+    api_key: ${GH_TOKEN}
+    file: README.md
     skip_cleanup: true
-    script:
-      - git remote add origin-pages https://${GH_TOKEN}@github.com/NachoColl/cognito.aws-sdk.js.git > /dev/null 2>&1
-      - gulp update-readme
-      - cat README.md
-      - git push --tags
     on:
+      tags: true
       branch: master
-
-
-

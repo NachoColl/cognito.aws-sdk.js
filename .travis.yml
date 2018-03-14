@@ -18,10 +18,10 @@ install:
   - npm install
 script: 
   - gulp compress
-before_deploy:
-  - pip install awscli --upgrade --user
   - gulp update-readme
   - cat README.md
+before_deploy:
+  - pip install awscli --upgrade --user
 deploy:
   - provider: script
     skip_cleanup: true

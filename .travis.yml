@@ -19,7 +19,7 @@ install:
 script: 
   - gulp compress
   - gulp update-readme
-  - git tag "$NEW_VERSION + $(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
+  - git tag "$NEW_VERSION-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
   - cat README.md
 before_deploy:
   - pip install awscli --upgrade --user

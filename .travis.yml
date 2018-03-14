@@ -14,7 +14,6 @@ before_install:
   # Update package.json based on the git tag we just created
   - npm --no-git-tag-version version from-git
   - VERSION=$(git describe --abbrev=0 --tags)
-  - $VERSION
 install:
   - npm install
 script: 
@@ -25,7 +24,7 @@ deploy:
   - provider: script
     skip_cleanup: true
     script:
-      - aws s3 sync ./dist s3://$AWS_S3_PATH/$TRAVIS_BUILD_NUMBER
+      - aws s3 sync ./dist s3://$AWS_S3_PATH/$VERSION
   - provider: script
     skip_cleanup: true
     script: 

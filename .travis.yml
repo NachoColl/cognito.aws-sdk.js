@@ -10,7 +10,7 @@ before_install:
   # versioning: http://phdesign.com.au/programming/auto-increment-project-version-from-travis/
   # Create a git tag of the new version to use
   # If package.json major and minor versions match last tag, then increment last tag. Else use package.json major.minor.0.
-  - NEW_VERSION = $"{ node -p "require('./package.json').version"; git describe --abbrev=0 --tags | sed -E 's/^v([0-9]{1,}\\.[0-9]{1,}\\.)([0-9]{1,})$/\\1 \\2/g'; } | tr \"\\n\" \" \" | awk '{printf($1==$2?\"v\"$2$3+1:\"v\"$1\"0\")}'"
+  - NEW_VERSION = $(node -p "require('./package.json').version"; git describe --abbrev=0 --tags | sed -E 's/^v([0-9]{1,}\\.[0-9]{1,}\\.)([0-9]{1,})$/\\1 \\2/g'; } | tr \"\\n\" \" \" | awk '{printf($1==$2?\"v\"$2$3+1:\"v\"$1\"0\")}')
   - cat $NEW_VERSION
   # Update package.json based on the git tag we just created
   - git tag "$NEW_VERSION"

@@ -5,7 +5,7 @@ node_js:
 # This is needed to avoid building all the tags pushed by travis
 branches:
   except:
-    - /^v?\d+\.\d+\.\d+$/
+    - /^v?\d+\.\d+\.\d+(\w*\W*)*$/
 before_install:
   # versioning: http://phdesign.com.au/programming/auto-increment-project-version-from-travis/
   # Create a git tag of the new version to use
@@ -19,7 +19,7 @@ install:
 script: 
   - gulp compress
   - gulp update-readme
-  - git tag "$NEW_VERSION-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
+  - git tag "$NEW_VERSION"
   - cat README.md
 before_deploy:
   - pip install awscli --upgrade --user
@@ -30,6 +30,5 @@ deploy:
       - aws s3 sync ./dist s3://$AWS_S3_PATH/$NEW_VERSION
   - provider: releases
     api_key: ${GH_TOKEN}
-    file: README.md
     overwrite: true
     skip_cleanup: true

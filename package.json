@@ -1,6 +1,6 @@
 {
   "name": "aws-cognito-wrapper-js-library",
-  "version": "1.10",
+  "version": "1.10.0",
   "description": "A simple javascript library for managing AWS Cognito signup/signin process.",
   "author": "Nacho Coll <ignacio.coll@gmail.com>",
   "private": true,

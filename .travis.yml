@@ -18,7 +18,7 @@ install:
   - npm install
 script: 
   - gulp compress
-  - gulp update-readme
+  - gulp update-readme --version "$NEW_VERSION"
   - git tag "$NEW_VERSION"
   - cat README.md
 before_deploy:

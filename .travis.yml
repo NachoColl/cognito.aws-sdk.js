@@ -34,10 +34,10 @@ before_deploy:
   # store credentials and push new tag and README.md change 
   - git config credential.helper "store --file=.git/credentials"
   - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
+  - git checkout master
   - git tag v$NEW_VERSION
   - git add README.md
   - git commit -m "[skip ci]" 
-  - git checkout master
   - git merge $TRAVIS_PULL_REQUEST_BRANCH
   - git push origin master
   # install awscli for deployment (sync to s3)

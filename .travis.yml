@@ -12,7 +12,7 @@ before_install:
   # get the related integer (to compare)
   - PACKAGE_VERSION_NUMBER=$(node -p "require('./package.json').version" | sed 's/[^0-9]*//g')
   # get version from git (0 if no tag)
-  - GIT_VERSION=$(git describe --abbrev=0 --tags || 0)
+  - GIT_VERSION=$(git describe --abbrev=0 --tags --always | grep 'v' || echo 0)
   # related int
   - GIT_VERSION_NUMBER=$(git describe --abbrev=0 --tags | sed 's/[^0-9]*//g')
   # next git version
@@ -21,9 +21,6 @@ before_install:
   - NEW_VERSION=$(echo $PACKAGE_VERSION $PACKAGE_VERSION_NUMBER $GIT_VERSION $GIT_VERSION_NUMBER $NEW_GIT_VERSION | awk '{ if($4>=$2) print($5); else print(v$1); }') 
   # create a new tag version on git
   - git tag $NEW_VERSION
-  # update package.json based on the git tag we just created
-  - npm --no-git-tag-version version from-git
-  - cat package.json
 install:
   - npm install
 script: 

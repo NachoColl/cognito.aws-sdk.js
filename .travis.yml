@@ -7,11 +7,12 @@ branches:
   except:
     - /^v?\d+\.\d+\.\d+(\w*\W*)*$/
 before_install:
-  # If package.json major and minor versions match last tag, then increment last tag. Else use package.json major.minor.0.
-  - git describe --abbrev=0 --tags
-  - NEW_VERSION=$((node -p "require('./package.json').version"; git describe --abbrev=0 --tags | sed -E 's/^v([0-9]{1,}\\.[0-9]{1,}\\.)([0-9]{1,})$/\\1 \\2/g';)  | tr "\n" " " | awk '{printf($1==$2?"v"$2$3+1:"v"$1"0")}')
+  # If package.json version > git version (manually updated) we take that.
+  - VN1=$(node -p "require('./package.json').version" | sed 's/[^0-9]*//g')
+  - VN2=$(git describe --abbrev=0 --tags | sed 's/[^0-9]*//g')
+  - NEW_VERSION=$(echo $VN1 $VN2 | awk '{ print($2>$1 ? $2 : $1)}' | awk -F. -v OFS=. 'NF==1{print ++$NF}; NF>1{$NF=sprintf("%0*d", length($NF), ($NF+1)); print})) 
   - cat $NEW_VERSION
-  # Update package.json based on the git tag we just created
+  # Update package.json based on the git tag we just created.
   - git tag "$NEW_VERSION"
   - npm --no-git-tag-version version from-git
   - cat package.json

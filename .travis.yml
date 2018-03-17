@@ -1,16 +1,26 @@
 language: node_js
 node_js:
   - "7"
-# This is needed to avoid building all the tags pushed by travis
+# This is needed to avoid building tags
 branches:
   except:
     - /^v?\d+\.\d+\.\d+(\w*\W*)*$/
-before_install:
+install:
+  - npm install
+script: 
+  # compress js files (just that for now :)
+  - gulp compress
+before_deploy:
+  #############################################################################
+  # {pre: package.json version format x.y.z}                                  #
+  # - generate the new version number                                         #
+  # - update the repo README.md file with the new version reference link      #
+  #############################################################################
   # get version from package.json
   - PACKAGE_VERSION=$(node -p "require('./package.json').version")
   # get the related integer (to compare)
   - PACKAGE_VERSION_NUMBER=$(node -p "require('./package.json').version" | sed 's/[^0-9]*//g')
-  # get version from git (0 if no tag - tags must be like 'v1.0.2')
+  # get version from git last tag (0 if no tag - tags must be like 'v1.0.2')
   - GIT_VERSION=$(git describe --abbrev=0 --tags --always | grep 'v' || echo 0)
   # related int
   - GIT_VERSION_NUMBER=$(git describe --abbrev=0 --tags | sed 's/[^0-9]*//g')
@@ -18,27 +28,23 @@ before_install:
   - NEW_GIT_VERSION=$(echo $GIT_VERSION | awk -F. -v OFS=. 'NF==1{print ++$NF}; NF>1{$NF=sprintf("%0*d", length($NF), ($NF+1)); print}')
   # if package.json version > git version, we use the package.json number
   - NEW_VERSION=$(echo $PACKAGE_VERSION $PACKAGE_VERSION_NUMBER $GIT_VERSION $GIT_VERSION_NUMBER $NEW_GIT_VERSION | awk '{ if($4>=$2) print($5); else print(v$1); }') 
-  # create a new tag version on git
-  - git tag v$NEW_VERSION
-install:
-  - npm install
-script: 
-  - gulp compress
-before_deploy:
+  # repo updates:
+  # update the README.md file with new library links
   - gulp update-readme --version "$NEW_VERSION" 
+  # store credentials and push new tag and README.md change 
   - git config credential.helper "store --file=.git/credentials"
   - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
   - git checkout master
+  - git tag v$NEW_VERSION
   - git add README.md
   - git commit -m "[skip ci]" 
   - git push origin master
   - pip install awscli --upgrade --user
 deploy:
+  #############################################################################
+  # - deploy the new version files to S3 (cloudfront)                         #
+  #############################################################################
   - provider: script
     skip_cleanup: true
     script:
       - aws s3 sync ./dist s3://$AWS_S3_PATH/$NEW_VERSION
-  - provider: releases
-    api_key: ${GH_TOKEN}
-    overwrite: true
-    skip_cleanup: true

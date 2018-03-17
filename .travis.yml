@@ -7,10 +7,18 @@ branches:
   except:
     - /^v?\d+\.\d+\.\d+(\w*\W*)*$/
 before_install:
-  # If package.json version > git version (manually updated) we take that.
-  - VN1=$(node -p "require('./package.json').version" | sed 's/[^0-9]*//g')
-  - VN2=$(git describe --abbrev=0 --tags | sed 's/[^0-9]*//g')
-  - NEW_VERSION=$(echo $VN1 $VN2 | awk '{ print($2>$1 ? $2 : $1)}' | awk -F. -v OFS=. 'NF==1{print ++$NF}; NF>1{$NF=sprintf("%0*d", length($NF), ($NF+1)); print})) 
+  # get version from package.json
+  - PACKAGE_VERSION=$(node -p "require('./package.json').version")
+  # get the related integer (to compare)
+  - PACKAGE_VERSION_NUMBER=$(node -p "require('./package.json').version" | sed 's/[^0-9]*//g')
+  # get version from git
+  - GIT_VERSION=$(git describe --abbrev=0 --tags)
+  # related int
+  - GIT_VERSION_NUMBER=$(git describe --abbrev=0 --tags | sed 's/[^0-9]*//g')
+  # next git version
+  - NEW_GIT_VERSION=$(echo $GIT_VERSION | awk -F. -v OFS=. 'NF==1{print ++$NF}; NF>1{$NF=sprintf("%0*d", length($NF), ($NF+1)); print}')
+  # if package.json version > git version, we use the package.json number
+  - NEW_VERSION=$(echo $PACKAGE_VERSION $PACKAGE_VERSION_NUMBER $GIT_VERSION $GIT_VERSION_NUMBER $NEW_GIT_VERSION | awk '{ print($4>$2 ? $5 : $1)}') 
   - cat $NEW_VERSION
   # Update package.json based on the git tag we just created.
   - git tag "$NEW_VERSION"

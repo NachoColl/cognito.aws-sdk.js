@@ -26,6 +26,7 @@ gulp.task('update-readme', function (cb) {
   pump([
         gulp.src(path.resolve(__dirname, './') + '/README.md'),
         replace(new RegExp('https:\/\/d2m9ia44cpx81c\.cloudfront\.net\/js\/services\/(?:\\d*)\/services\.library\.min\.js', 'g'), 'https://d2m9ia44cpx81c.cloudfront.net/js/services/' + gutil.env.version + '/services.library.min.js'),
+        replace(new RegExp('https:\/\/d2m9ia44cpx81c\.cloudfront\.net\/js\/services\/(?:\\d*)\/services\.aws-sdk\.min\.js', 'g'), 'https://d2m9ia44cpx81c.cloudfront.net/js/services/' + gutil.env.version + '/services.aws-sdk.min.js'),
         gulp.dest(path.resolve(__dirname, './'))
     ],
     cb

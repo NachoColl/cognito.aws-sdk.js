@@ -28,18 +28,8 @@ before_deploy:
   - NEW_GIT_VERSION=$(echo $GIT_VERSION | awk -F. -v OFS=. 'NF==1{print ++$NF}; NF>1{$NF=sprintf("%0*d", length($NF), ($NF+1)); print}')
   # if package.json version > git version, we use the package.json number
   - NEW_VERSION=$(echo $PACKAGE_VERSION $PACKAGE_VERSION_NUMBER $GIT_VERSION $GIT_VERSION_NUMBER $NEW_GIT_VERSION | awk '{ if($4>=$2) print($5); else print(v$1); }') 
-  # repo updates:
-  - git checkout master
-  # update the README.md file with new library links
-  - gulp update-readme --version "$NEW_VERSION" --travisbuild "$TRAVIS_BUILD_NUMBER"
-  - git add README.md
+  # adds new tag to repo
   - git tag v$NEW_VERSION
-  - set -e
-  - git commit -m "[skip ci]" 
-  # store credentials and push 
-  - git config credential.helper "store --file=.git/credentials"
-  - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
-  - git push origin master
   # install awscli for deployment (sync to s3)
   - pip install awscli --upgrade --user
 deploy:
@@ -55,3 +45,15 @@ deploy:
     skip_cleanup: true
     on:
       tags: true
+after_deploy:
+  # repo updates:
+  - git checkout master
+  # update the README.md file with new library links
+  - gulp update-readme --version "$NEW_VERSION" --travisbuild "$TRAVIS_BUILD_NUMBER"
+  - git add README.md
+  - set -e
+  - git commit -m "[skip ci]" 
+  # store credentials and push 
+  - git config credential.helper "store --file=.git/credentials"
+  - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
+  - git push origin master

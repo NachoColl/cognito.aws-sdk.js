@@ -26,10 +26,10 @@ script:
   - gulp compress
 before_deploy:
   - gulp update-readme --version "$NEW_VERSION" 
-  - cat README.md
   - git config credential.helper "store --file=.git/credentials"
   - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
-  - git commit -m "[skip ci]" -- README.md
+  - git add README.me
+  - git commit -m "[skip ci]" 
   - git push origin master
   - pip install awscli --upgrade --user
 deploy:

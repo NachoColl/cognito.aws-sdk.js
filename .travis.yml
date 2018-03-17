@@ -1,4 +1,3 @@
-
 language: node_js
 node_js:
   - "7"
@@ -20,7 +19,7 @@ before_install:
   # if package.json version > git version, we use the package.json number
   - NEW_VERSION=$(echo $PACKAGE_VERSION $PACKAGE_VERSION_NUMBER $GIT_VERSION $GIT_VERSION_NUMBER $NEW_GIT_VERSION | awk '{ if($4>=$2) print($5); else print(v$1); }') 
   # create a new tag version on git
-  - git tag $NEW_VERSION
+  - git tag v$NEW_VERSION
 install:
   - npm install
 script: 

@@ -24,11 +24,13 @@ install:
   - npm install
 script: 
   - gulp compress
-  - gulp update-readme --version "$NEW_VERSION"
-  - cat README.md
-  - git commit -m "[skip ci]"
-  - git push origin master
 before_deploy:
+  - gulp update-readme --version "$NEW_VERSION" 
+  - cat README.md
+  - git config credential.helper "store --file=.git/credentials"
+  - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
+  - git commit -m "[skip ci]" -- README.md
+  - git push origin master
   - pip install awscli --upgrade --user
 deploy:
   - provider: script

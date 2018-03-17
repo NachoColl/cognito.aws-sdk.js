@@ -20,7 +20,7 @@ before_install:
   # if package.json version > git version, we use the package.json number
   - NEW_VERSION=$(echo $PACKAGE_VERSION $PACKAGE_VERSION_NUMBER $GIT_VERSION $GIT_VERSION_NUMBER $NEW_GIT_VERSION | awk '{ if($4>$2) print($5); else print($1); }') 
   # create a new tag version on git
-  - git tag "$NEW_VERSION"
+  - git tag $NEW_VERSION
   # update package.json based on the git tag we just created
   - npm --no-git-tag-version version from-git
   - cat package.json

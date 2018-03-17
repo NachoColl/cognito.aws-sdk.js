@@ -14,4 +14,4 @@ To start using AWS Cognito SDK wrapper, include the library script files:
 
 
 --------------------------
-Travid build number:68 
+Travid build number: 68 

@@ -45,11 +45,9 @@ deploy:
     skip_cleanup: true
 after_deploy:
   # repo updates:
-  # - git checkout master
   # update the README.md file with new library links
   - gulp update-readme --version "$NEW_VERSION" --travisbuild "$TRAVIS_BUILD_NUMBER"
   - git add README.md
-  # - set -e
   - git commit -m "[skip ci]" 
   # store credentials and push 
   - git config credential.helper "store --file=.git/credentials"

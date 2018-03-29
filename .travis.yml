@@ -40,9 +40,9 @@ deploy:
     skip_cleanup: true
     script:
       - aws s3 sync ./dist s3://$AWS_S3_PATH/$NEW_VERSION
-  - provider: releases
-    api_key: "${GH_TOKEN}"
-    skip_cleanup: true
+  #- provider: releases
+  #  api_key: "${GH_TOKEN}"
+  #  skip_cleanup: true
 after_deploy:
   # repo updates:
   # update the README.md file with new library links
@@ -52,4 +52,4 @@ after_deploy:
   # store credentials and push 
   - git config credential.helper "store --file=.git/credentials"
   - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
-  - git push origin master
+  - git push origin --tags

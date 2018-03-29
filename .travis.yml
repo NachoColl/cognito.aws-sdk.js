@@ -19,11 +19,11 @@ before_deploy:
   # get version from package.json
   - PACKAGE_VERSION=$(node -p "require('./package.json').version")
   # get the related integer (to compare)
-  - PACKAGE_VERSION_NUMBER=$(node -p "require('./package.json').version" | sed 's/[^0-9]*//g')
+  - PACKAGE_VERSION_NUMBER=$(node -p "require('./package.json').version" | sed 's/[a-z]*//g' | awk -F. '{printf("%d%04d%04d%",$1,$2,$3)}')
   # get version from git last tag (0 if no tag - tags must be like 'v1.0.2')
   - GIT_VERSION=$(git describe --abbrev=0 --tags --always | sed 's/[a-z]*//g')
   # related int
-  - GIT_VERSION_NUMBER=$(git describe --abbrev=0 --tags | sed 's/[^0-9]*//g')
+  - GIT_VERSION_NUMBER=$(git describe --abbrev=0 --tags | sed 's/[a-z]*//g' | awk -F. '{printf("%d%04d%04d%",$1,$2,$3)}')
   # next git version
   - NEW_GIT_VERSION=$(echo $GIT_VERSION | awk -F. -v OFS=. 'NF==1{print ++$NF}; NF>1{$NF=sprintf("%0*d", length($NF), ($NF+1)); print}')
   # if package.json version > git version, we use the package.json number

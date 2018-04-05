@@ -29,7 +29,7 @@ before_deploy:
   # if package.json version > git version, we use the package.json number
   - NEW_VERSION=$(echo $PACKAGE_VERSION $PACKAGE_VERSION_NUMBER $GIT_VERSION $GIT_VERSION_NUMBER $NEW_GIT_VERSION | awk '{ if($4>=$2) print($5); else print($1); }') 
   # adds new tag to repo
-  - git tag v$NEW_VERSION
+  - git tag -a v$NEW_VERSION -m "v$NEW_VERSION automatically generated from Travis"
   # install awscli for deployment (sync to s3)
   - pip install awscli --upgrade --user
 deploy:
@@ -52,4 +52,4 @@ after_deploy:
   # store credentials and push 
   - git config credential.helper "store --file=.git/credentials"
   - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
-  - git push origin --tags
+  - git push origin --follow-tags

@@ -44,13 +44,12 @@ after_deploy:
   #############################################################################  
   # store credentials
   - git config credential.helper "store --file=.git/credentials"
-  - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
-  - git remote show origin
+  - echo "https://${GH_TOKEN}:@github.com" > .git/credentials 
   # update the README.md file with new library links
   - gulp update-readme --version "$NEW_VERSION" --travisbuild "$TRAVIS_BUILD_NUMBER"
   - git add README.md
   - git commit -m "[skip ci]" 
-
+  - git remote show origin
   # push changes
   - git push origin master
   # adds new tag to repo

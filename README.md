@@ -7,11 +7,11 @@ A simple javascript library for managing AWS Cognito signup/signin process.
 To start using AWS Cognito SDK wrapper, include the library script files:
 
 ```js
-<script src="https://d2m9ia44cpx81c.cloudfront.net/js/services/1.0.14/services.library.min.js" />
-<script src="https://d2m9ia44cpx81c.cloudfront.net/js/services/1.0.14/services.aws-sdk.min.js" />
+<script src="https://d2m9ia44cpx81c.cloudfront.net/js/services/1.0.15/services.library.min.js" />
+<script src="https://d2m9ia44cpx81c.cloudfront.net/js/services/1.0.15/services.aws-sdk.min.js" />
 ```
 
 
 
 --------------------------
-build number: 89 
+build number: 90 

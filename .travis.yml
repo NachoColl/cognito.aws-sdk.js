@@ -51,5 +51,5 @@ after_deploy:
   # store credentials and push 
   - git config credential.helper "store --file=.git/credentials"
   - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
-  - git push 
+  - git push origin master
   - git push --tags

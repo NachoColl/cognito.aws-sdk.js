@@ -14,4 +14,4 @@ To start using AWS Cognito SDK wrapper, include the library script files:
 
 
 --------------------------
-build number: 88 
+build number: 89 
